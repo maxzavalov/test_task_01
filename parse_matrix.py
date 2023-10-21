@@ -11,21 +11,21 @@ async def get_text(url: str) -> str:
             async with session.get(url) as response:
                 return await response.text()
     except aiohttp.ClientError as ex:
-        return f'ClientError {ex}'
+        return f"ClientError {ex}"
     except TimeoutError as ex:
-        return f'TimeoutError {ex}'
+        return f"TimeoutError {ex}"
 
 
 def text_to_array(text: str) -> np.array:
     """Filter numbers from text and makes square np.matrix."""
-    filter_nums = re.findall(r'\d+', text)
+    filter_nums = re.findall(r"\d+", text)
     nums_list = [int(num) for num in filter_nums]
     size = int(len(nums_list) ** 0.5)
     return np.array(nums_list).reshape(size, size)
 
 
 def matrix_to_list(matrix: np.array) -> list[int]:
-    """Takes np.array and returns it's numbers in a spiral """
+    """Takes np.array and returns it's numbers in a spiral"""
     result = []
     while matrix.size > 0:
         matrix = np.rot90(matrix, -1)  # Rotate matrix to right.
